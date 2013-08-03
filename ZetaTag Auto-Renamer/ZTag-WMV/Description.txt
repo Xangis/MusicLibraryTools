@@ -1,0 +1,21 @@
+The ZetaTag Auto-Renamer is a quick and easy tool to rename music files into a
+format that is easily recognized by Humans.  It uses tag information to
+automatically rename all MP3, WMA, and OGG music files to the following format:
+
+Artist - Album - Track Number - Track Name.ext
+
+It automatically traverses subdirectories and will rename any files it finds.
+
+Files without a full set of information for artist, album, track number, and
+track name will not be renamed.
+
+This application does not allow configuration beyond the separator character
+(some people like to use underscores because they are more internet-friendly).
+It does only one thing and it does it well.
+
+This program was created for the purpose of maintaining our music collection,
+but it is provided for free here in case it will be useful to others.
+
+The .NET Framework 3.5 is required.  You probably already have it installed.
+
+The ZetaTag Auto-Renamer was built using the TagLib# library.

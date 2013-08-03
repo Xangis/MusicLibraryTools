@@ -1,0 +1,13 @@
+The Song Length Finder is a quick and easy tool to find songs of a specific
+playing time.  It is meant to be used by those looking building song
+compilations, soundtracks, musical interludes, or any situation that
+requires a song of a specific length.
+
+It automatically traverses subdirectories and will index any files it finds.
+
+After indexing, you can easily search for and match songs of a specific length
+or range of lengths.
+
+The .NET Framework 3.5 is required.  You probably already have it installed.
+
+The Song Length Finder was built using the TagLib# library.

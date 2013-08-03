@@ -1,0 +1,22 @@
+﻿<Window x:Class="ZTag_WMV.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Genre Playlist Builder" Height="400" Width="632" ResizeMode="NoResize" Background="Black" Foreground="Yellow" Icon="/GenrePlaylistBuilder;component/note.bmp">
+    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
+        <StackPanel Orientation="Horizontal">
+            <Label Foreground="Yellow" Margin="1" Width="64">Directory: </Label>
+            <TextBox Foreground="Yellow" Background="DimGray" Margin="1" Width="350" Name="txtDirectory">C:\</TextBox>
+            <Button Margin="1" Width="76" Name="btnBrowse" Click="btnBrowse_Click">Browse</Button>
+            <Button Margin="1" Width="76" Name="btnIndex" Click="btnIndex_Click">Index</Button>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Foreground="Yellow" Margin="1" Width="64">Genre:</Label>
+            <ComboBox Background="DimGray" Foreground="Yellow" Margin="1" Width="154" Name="lstGenres" xml:space="preserve"><ComboBox.ItemsPanel><ItemsPanelTemplate><StackPanel Background="DimGray"/></ItemsPanelTemplate></ComboBox.ItemsPanel></ComboBox>
+            <Button Margin="1" Width="100" Name="btnCreatePlaylist" Click="btnCreatePlaylist_Click">Create Playlist</Button>
+            <Button Margin="1" Width="18" Name="btnAbout" Click="btnAbout_Click">?</Button>
+            <Label Foreground="Yellow" Margin="1">Indexed:</Label>
+            <Label Foreground="Yellow" Margin="1" Name="lblNumIndexed">0</Label>
+        </StackPanel>
+        <ListBox Margin="1" Name="lstOutput" Height="310" Background="Black" Foreground="Yellow" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Visible"></ListBox>
+    </StackPanel>
+</Window>
