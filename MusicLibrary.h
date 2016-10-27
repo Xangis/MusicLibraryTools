@@ -77,9 +77,11 @@ private:
     wxButton* _btnGenerate;
 	wxTextCtrl* _txtFilename;
     wxChoice* _lstGenres;
-    wxListCtrl* _lstFiles;
+    wxListBox* _lstFiles;
+    wxStaticText* _numIndexed;
     int _numSongs;
     wxArrayString _genres;
+    wxArrayString _files;
 };
 
 #endif

@@ -4,6 +4,8 @@
 #include "wx/dir.h"
 #include "MusicLibrary.h"
 #include "taglib.h"
+#include "taglib/fileref.h"
+#include <set>
 
 IMPLEMENT_DYNAMIC_CLASS( MusicLibrary, wxDialog )
 
@@ -146,11 +148,12 @@ void MusicLibrary::CreateControls()
     _btnRename = new wxButton(itemDialog1, ID_BTN_RENAME, _("Rename"));
     itemBoxSizer8->Add(_btnRename, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxBoxSizer* itemBoxSizer24 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer24, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    wxStaticBox* box4 = new wxStaticBox(itemDialog1, wxID_ANY, _("Edit Song Tags"));
+    wxStaticBoxSizer* itemBoxSizer42 = new wxStaticBoxSizer(box4, wxHORIZONTAL);
+    itemBoxSizer2->Add(itemBoxSizer42, 0, wxEXPAND|wxALL, 5);
 
-    _lstFiles = new wxListCtrl( itemDialog1, ID_LIST_FILES, wxDefaultPosition, wxSize(600, 120) );
-    itemBoxSizer24->Add(_lstFiles, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    _lstFiles = new wxListBox( itemDialog1, ID_LIST_FILES, wxDefaultPosition, wxSize(700, 200) );
+    itemBoxSizer42->Add(_lstFiles, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer14 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer2->Add(itemBoxSizer14, 0, wxALL, 5);
@@ -158,8 +161,8 @@ void MusicLibrary::CreateControls()
     wxStaticText* itemStaticText19 = new wxStaticText( itemDialog1, wxID_STATIC, _("Number of Songs Indexed:"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer14->Add(itemStaticText19, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticText* itemStaticText20 = new wxStaticText( itemDialog1, wxID_STATIC, _("0"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer14->Add(itemStaticText20, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    _numIndexed = new wxStaticText( itemDialog1, wxID_STATIC, _("0"), wxDefaultPosition, wxSize(80, 20), 0 );
+    itemBoxSizer14->Add(_numIndexed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     _btnInfo = new wxButton(itemDialog1, ID_BTN_INFO, _("Info"));
 	itemBoxSizer14->Add(_btnInfo, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -198,7 +201,9 @@ void MusicLibrary::OnInfo( wxCommandEvent& event )
 void MusicLibrary::FindFiles(wxString directory)
 {
     printf("Reading directory: %s", directory);
-    _lstFiles->ClearAll();
+    _lstFiles->Clear();
+    _lstGenres->Clear();
+    _files.Clear();
     wxArrayString files;
 #ifndef __APPLE__
     wxDir::GetAllFiles(directory, &files, wxString(_("*.mp3")), wxDIR_FILES|wxDIR_DIRS);
@@ -207,42 +212,34 @@ void MusicLibrary::FindFiles(wxString directory)
     wxDir::GetAllFiles(dirname, &_waveFileNames, wxString(_("*.wav")), wxDIR_FILES);
 #endif
     _numSongs = files.Count();
+    std::set<TagLib::String> genreList;
 
 	if( _numSongs > 0 )
 	{
 		// Fix paths so they're absolute -- they load as relative.
-		for( int i = 0; i < files.Count(); i++ )
+		for( unsigned int i = 0; i < files.Count(); i++ )
 		{
             //if (file.Extension == ".wma" || file.Extension == ".mp3" || file.Extension == ".ogg")
-            _lstFiles->InsertItem(i, files[i]);
-            //TagLib.File tag;
-            //tag = TagLib.File.Create(file.FullName);
-            //int nogenres = 0;
-            //wxArrayString genres = tag.Tag.Genres;
-            //if (genres.size() < 1)
-            //{
-            //    ++nogenres;
-            //    continue;
-            //}
-
+            _lstFiles->Append(files[i]);
+            _files.Add(files[i]);
+            TagLib::FileRef f(files[i].mb_str().data());
+            TagLib::String genre = f.tag()->genre();
+            genreList.insert(genre);
         }
     }
 
-    //foreach (String str in genres)
-    //{
-    //    if (!_genres.ContainsKey(str))
-    //    {
-    //        _genres[str] = new List<String>();
-    //    }
-    //    _genres[str].Add(file.FullName);
-    //}
-    //++songCount;
-    //lblNumIndexed.Content = songCount.ToString();
+    std::set<TagLib::String>::iterator it;
+    for( it = genreList.begin(); it != genreList.end(); it++ )
+    {
+        _lstGenres->Append((*it).toCString());
+    }
 
     //foreach (String dir in Directory.GetDirectories(directory))
     //{
     //    FindFiles(dir);
     //}
+
+    _numIndexed->SetLabel(wxString::Format(_("%d"), _numSongs));
 }
 
 void MusicLibrary::OnIndex( wxCommandEvent& event )
