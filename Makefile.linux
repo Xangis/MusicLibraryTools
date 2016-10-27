@@ -1,6 +1,6 @@
 # Sigmatizm makefile.  Requires wxWidgets.
 # by default, wx-config from the PATH is used
-WX_CONFIG := /usr/bin/wx-config
+WX_CONFIG := wx-config
 
 # Main executable file
 PROGRAM = MusicLibraryTools
@@ -29,7 +29,7 @@ CXX = $(shell $(WX_CONFIG) --cxx -O3)
 all:    $(PROGRAM)
 
 $(PROGRAM):	$(OBJECTS)
-	$(CXX) -o $(PROGRAM) $(OBJECTS) -L$(LIBDIR) `$(WX_CONFIG) --libs` -lpthread
+	$(CXX) -o $(PROGRAM) $(OBJECTS) -L$(LIBDIR) `$(WX_CONFIG) --libs` -lpthread -ltag -lz
 
 clean: 
 	rm -f *.o $(PROGRAM) $(INCLUDEDIR3)/*.o
