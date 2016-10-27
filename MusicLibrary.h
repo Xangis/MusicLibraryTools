@@ -38,6 +38,9 @@
 #define ID_BTN_INDEX 10017
 #define ID_LIST_GENRES 10018
 #define ID_LIST_FILES 10019
+#define ID_BTN_FIND 10020
+#define ID_BTN_RENAME 10021
+#define ID_BTN_GENERATE 10022
 
 /*!
  * Compatibility
@@ -61,6 +64,7 @@ public:
     void OnCloseWindow( wxCloseEvent& event );
 	void OnInfo( wxCommandEvent& event );
     void OnIndex( wxCommandEvent& event );
+    void OnBrowse( wxCommandEvent& event );
     void FindFiles(wxString directory);
 private:
 	wxMutex _mutex;
@@ -68,6 +72,9 @@ private:
 	wxButton* _btnBrowse;
     wxButton* _btnInfo;
     wxButton* _btnIndex;
+    wxButton* _btnFind;
+    wxButton* _btnRename;
+    wxButton* _btnGenerate;
 	wxTextCtrl* _txtFilename;
     wxChoice* _lstGenres;
     wxListCtrl* _lstFiles;
