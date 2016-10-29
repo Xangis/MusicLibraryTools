@@ -14,6 +14,9 @@ BEGIN_EVENT_TABLE( MusicLibrary, wxDialog )
 	EVT_BUTTON( ID_BTN_INFO, MusicLibrary::OnInfo )
     EVT_BUTTON( ID_BTN_BROWSE, MusicLibrary::OnBrowse )
     EVT_BUTTON( ID_BTN_INDEX, MusicLibrary::OnIndex )
+    EVT_BUTTON( ID_BTN_RENAME, MusicLibrary::OnRename )
+    EVT_BUTTON( ID_BTN_GENERATE, MusicLibrary::OnRename )
+    EVT_BUTTON( ID_BTN_FIND, MusicLibrary::OnFind )
 END_EVENT_TABLE()
 
 
@@ -263,4 +266,16 @@ void MusicLibrary::OnBrowse( wxCommandEvent& event )
 	wxString fname = fdialog.GetPath();
     _txtFilename->SetLabel(fname);
     event.Skip();
+}
+
+void MusicLibrary::OnRename( wxCommandEvent& event )
+{
+}
+
+void MusicLibrary::OnGenerate( wxCommandEvent& event )
+{
+}
+
+void MusicLibrary::OnFind( wxCommandEvent& event )
+{
 }

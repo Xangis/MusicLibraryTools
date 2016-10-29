@@ -65,6 +65,9 @@ public:
 	void OnInfo( wxCommandEvent& event );
     void OnIndex( wxCommandEvent& event );
     void OnBrowse( wxCommandEvent& event );
+    void OnRename( wxCommandEvent& event );
+    void OnGenerate( wxCommandEvent& event );
+    void OnFind( wxCommandEvent& event );
     void FindFiles(wxString directory);
 private:
 	wxMutex _mutex;
